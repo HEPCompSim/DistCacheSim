@@ -20,21 +20,26 @@ include_directories(src/ ${SimGrid_INCLUDE_DIR}/include /usr/local/include /opt/
 set(SOURCE_FILES
         src/SimpleExecutionController.h
         src/SimpleExecutionController.cpp
+        src/SimpleSimulator.h
         src/SimpleSimulator.cpp
         src/JobSpecification.h
+        src/LRU_FileList.h
+        src/MonitorAction.h
+        src/MonitorAction.cpp
+        src/util/DefaultValues.h
         src/computation/CacheComputation.h
         src/computation/CacheComputation.cpp
         src/computation/StreamedComputation.h
         src/computation/StreamedComputation.cpp
         src/computation/CopyComputation.h
         src/computation/CopyComputation.cpp
-        src/SimpleSimulator.h
-        src/LRU_FileList.h
         )
 
 # test files
 set(TEST_FILES
         src/JobSpecification.h
+        src/MonitorAction.h
+        src/util/DefaultValues.h
         src/computation/CacheComputation.h
         src/computation/StreamedComputation.h
         src/computation/CopyComputation.h
@@ -44,7 +49,6 @@ set(TEST_FILES
 
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES wrench)
-find_library(PUGIXML_LIBRARY NAMES pugixml)
 find_library(GTEST_LIBRARY NAMES gtest)
 find_library(SimGrid_LIBRARY NAMES simgrid)
 
@@ -54,18 +58,14 @@ add_executable(sgbatch-sim ${SOURCE_FILES})
 if (ENABLE_BATSCHED)
 target_link_libraries(sgbatch-sim
                        ${WRENCH_LIBRARY}
-                       ${WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY}
                        ${SimGrid_LIBRARY}
                        ${Boost_LIBRARIES}
-                       ${PUGIXML_LIBRARY}
                       -lzmq )
 else()
 target_link_libraries(sgbatch-sim
                        ${WRENCH_LIBRARY}
-                       ${WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY}
                        ${SimGrid_LIBRARY}
                        ${Boost_LIBRARIES}
-                       ${PUGIXML_LIBRARY}
                       )
 endif()
 
